@@ -46,13 +46,9 @@ jobs:
         id: restore
         run: dotnet restore ${{ env.PROJECT_NAME }}
 
-      - name: Build
-        id: build
-        run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v d --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
-
-      - name: Pack Nuget
-        id: pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v d --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
+      - name: Build and Pack
+        id: build_and_pack
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v n --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
 
       - name: Create Release
         id: create_release
