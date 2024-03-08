@@ -46,9 +46,15 @@ jobs:
         id: restore
         run: dotnet restore ${{ env.PROJECT_NAME }}
 
-      - name: Build and Pack
-        id: build_and_pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v n --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
+      - name: Build
+        id: build
+        run: |
+          echo "Building ${{ env.PROJECT_NAME }} with version ${{ env.VERSION }} and version suffix ${{ env.PACKAGE_SUFFIX }}"
+          dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:VersionSuffix=${{ env.PACKAGE_SUFFIX }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
+
+      - name: Pack Nuget
+        id: pack
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs
 
       - name: Create Release
         id: create_release
