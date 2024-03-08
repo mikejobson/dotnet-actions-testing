@@ -34,8 +34,8 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
           git fetch --tags
           tags=$(git tag --list)
-          echo "Looking at tags:\r$tags"
-          count=$(echo $tags | grep -o '$version-rc-' | wc -l)
+          echo "Looking at tags:\n$tags"
+          count=$(echo $tags | grep -o $version-rc- | wc -l)
           count=$((count+1))
           echo "Next rc tag is $count"
           echo "PACKAGE_SUFFIX=rc-$count" >> $GITHUB_ENV
