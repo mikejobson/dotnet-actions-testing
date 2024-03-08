@@ -48,11 +48,11 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build ${{ env.PROJECT_NAME }} -c Release --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
+        run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v d --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
 
       - name: Pack Nuget
         id: pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v d --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
 
       - name: Create Release
         id: create_release
