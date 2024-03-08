@@ -45,11 +45,11 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build --configuration Release --no-restore ${{ env.PROJECT_NAME }}
+        run: dotnet build ${{ env.PROJECT_NAME }} --configuration Release --no-restore
 
       - name: Pack Nuget
         id: pack
-        run: dotnet pack --configuration Release --version-suffix ${{ env.PACKAGE_SUFFIX }} --no-build --output nupkgs ${{ env.PROJECT_NAME }}
+        run: dotnet pack ${{ env.PROJECT_NAME }} --configuration Release --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
 
       - name: Create Release
         id: create_release
