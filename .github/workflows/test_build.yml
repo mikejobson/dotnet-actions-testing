@@ -29,13 +29,14 @@ jobs:
       - name: Get Version Number
         id: get-version
         run: |
-          version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          version=$(grep -o '<VersionPrefix>.*</VersionPrefix>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<VersionPrefix>\(.*\)<\/VersionPrefix>/\1/')
           echo "VERSION=$version" >> $GITHUB_ENV
           git fetch --tags
           tags=$(git tag --list)
           count=$(echo $tags | grep -o '1.0.1-rc-' | wc -l)
           count=$((count+1))
           echo "PACKAGE_SUFFIX=rc-$count" >> $GITHUB_ENV
+          echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
           echo "VERSION_TITLE=v$version Release Candidate $count" >> $GITHUB_ENV
 
       - name: Restore Nuget Packages
@@ -54,8 +55,8 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.VERSION }}-${{ env.PACKAGE_SUFFIX }}
-          name: Release v${{ env.VERSION }}-${{ env.PACKAGE_SUFFIX }}
+          tag: ${{ env.TAG }}
+          name: Release v${{ env.VERSION_TITLE }}
           draft: false
           prerelease: true
           artifacts: |
