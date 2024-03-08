@@ -30,11 +30,14 @@ jobs:
         id: get-version
         run: |
           version=$(grep -o '<VersionPrefix>.*</VersionPrefix>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<VersionPrefix>\(.*\)<\/VersionPrefix>/\1/')
+          echo "Version is $version"
           echo "VERSION=$version" >> $GITHUB_ENV
           git fetch --tags
           tags=$(git tag --list)
-          count=$(echo $tags | grep -o '1.0.1-rc-' | wc -l)
+          echo "Looking at tags:\r$tags"
+          count=$(echo $tags | grep -o '$version-rc-' | wc -l)
           count=$((count+1))
+          echo "Next rc tag is $count"
           echo "PACKAGE_SUFFIX=rc-$count" >> $GITHUB_ENV
           echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
           echo "VERSION_TITLE=v$version Release Candidate $count" >> $GITHUB_ENV
@@ -45,11 +48,11 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build ${{ env.PROJECT_NAME }} --configuration Release --no-restore
+        run: dotnet build ${{ env.PROJECT_NAME }} --c Release --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
 
       - name: Pack Nuget
         id: pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} --configuration Release --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
+        run: dotnet pack ${{ env.PROJECT_NAME }} --c Release --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
 
       - name: Create Release
         id: create_release
