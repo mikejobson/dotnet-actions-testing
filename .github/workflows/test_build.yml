@@ -48,7 +48,7 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build ${{ env.PROJECT_NAME }} --c Release --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
+        run: dotnet build ${{ env.PROJECT_NAME }} --c Release --no-restore -p:VersionPrefix=${{ env.VERSION }}
 
       - name: Pack Nuget
         id: pack
