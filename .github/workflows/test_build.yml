@@ -33,9 +33,10 @@ jobs:
           echo "VERSION=$version" >> $GITHUB_ENV
           git fetch --tags
           tags=$(git tag --list)
-          count=$(echo $tags | grep -o '1.0.1-beta-' | wc -l)
+          count=$(echo $tags | grep -o '1.0.1-rc-' | wc -l)
           count=$((count+1))
-          echo "PACKAGE_SUFFIX=beta-$count" >> $GITHUB_ENV
+          echo "PACKAGE_SUFFIX=rc-$count" >> $GITHUB_ENV
+          echo "VERSION_TITLE=v$version Release Candidate $count" >> $GITHUB_ENV
 
       - name: Restore Nuget Packages
         id: restore
@@ -51,11 +52,11 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ steps.get-version.outputs.VERSION }}-${{ env.PACKAGE_SUFFIX }}
-          release_name: Release v${{ steps.get-version.outputs.VERSION }}-${{ env.PACKAGE_SUFFIX }}
+          tag: ${{ env.VERSION }}-${{ env.PACKAGE_SUFFIX }}
+          name: Release v${{ env.VERSION }}-${{ env.PACKAGE_SUFFIX }}
           draft: false
           prerelease: true
+          artifacts: |
+            nupkgs/*.nupkg
