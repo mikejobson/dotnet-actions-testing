@@ -1,0 +1,61 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test Build
+
+on:
+  pull_request:
+  push:
+
+env:
+  PROJECT_NAME: TestLib
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Setup .NET Core
+        id: setup-dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+          cache: true
+          cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
+
+      - name: Get Version Number
+        id: get-version
+        run: |
+          version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          echo "VERSION=$version" >> $GITHUB_ENV
+          git fetch --tags
+          tags=$(git tag --list)
+          count=$(echo $tags | grep -o '1.0.1-beta-' | wc -l)
+          count=$((count+1))
+          echo "PACKAGE_SUFFIX=beta-$count" >> $GITHUB_ENV
+
+      - name: Restore Nuget Packages
+        id: restore
+        run: dotnet restore ${{ env.PROJECT_NAME }}
+
+      - name: Build
+        id: build
+        run: dotnet build --configuration Release --no-restore ${{ env.PROJECT_NAME }}
+
+      - name: Pack Nuget
+        id: pack
+        run: dotnet pack --configuration Release --version-suffx ${{ env.PACKAGE_SUFFIX }} --no-build --output nupkgs ${{ env.PROJECT_NAME }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.VERSION }}-${{ env.PACKAGE_SUFFIX }}
+          release_name: Release v${{ steps.get-version.outputs.VERSION }}-${{ env.PACKAGE_SUFFIX }}
+          draft: false
+          prerelease: true

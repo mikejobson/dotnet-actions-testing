@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net6.0;net472</TargetFrameworks>
+        <Title>Test Library</Title>
+        <LangVersion>8</LangVersion>
+        <Authors>Mike Jobson</Authors>
+        <RepositoryUrl>https://github.com/mikejobson/dotnet-actions-testing</RepositoryUrl>
+        <Version>1.0.1</Version>
+    </PropertyGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "${workspaceFolder}/TestLib/TestLib.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Pack",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "pack",
+                "${workspaceFolder}/TestLib/TestLib.csproj"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
