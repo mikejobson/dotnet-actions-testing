@@ -56,7 +56,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.TAG }}
-          name: Release v${{ env.VERSION_TITLE }}
+          name: Release ${{ env.VERSION_TITLE }}
           draft: false
           prerelease: true
           artifacts: |
