@@ -11,7 +11,7 @@
         <PackageTags>Crestron, SimplSharp, SimplSharpPro, Crestron.SimplSharp, Crestron.SimplSharpPro, UXAV, UXAV.TestLib</PackageTags>
         <Description>Test Library for CI and publishing automation</Description>
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-        <ReadmeFile>README.md</ReadmeFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
