@@ -2,12 +2,12 @@
 
 This package is just for CI and publish testing only. Do not use! 🙂
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mikejobson/dotnet-actions-testing/test.yml?branch=main&style=flat&logo=github&label=status)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/mikejobson/dotnet-actions-testing?style=flat&logo=github)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/mikejobson/dotnet-actions-testing?style=flat&logo=github)
-![NuGet Version](https://img.shields.io/nuget/v/UXAV.TestLib?style=flat&logo=nuget)
-![NuGet Downloads](https://img.shields.io/nuget/dt/UXAV.TestLib?style=flat&logo=nuget)
-![GitHub License](https://img.shields.io/github/license/mikejobson/dotnet-actions-testing?style=flat)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mikejobson/dotnet-actions-testing/test.yml?branch=main&style=flat&logo=github&label=status)](https://github.com/mikejobson/dotnet-actions-testing/actions)
+[![GitHub Issues](https://img.shields.io/github/issues/mikejobson/dotnet-actions-testing?style=flat&logo=github)](https://github.com/mikejobson/dotnet-actions-testing/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/mikejobson/dotnet-actions-testing?style=flat&logo=github)](https://github.com/mikejobson/dotnet-actions-testing/pulls)
+[![NuGet Version](https://img.shields.io/nuget/v/UXAV.TestLib?style=flat&logo=nuget&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FUXAV.TestLib)](https://www.nuget.org/packages/UXAV.TestLib)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/UXAV.TestLib?style=flat&logo=nuget)](https://www.nuget.org/packages/UXAV.TestLib)
+[![GitHub License](https://img.shields.io/github/license/mikejobson/dotnet-actions-testing?style=flat)](LICENSE)
 
 ## Links
 
