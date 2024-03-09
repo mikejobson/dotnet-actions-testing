@@ -7,7 +7,7 @@
             "type": "shell",
             "args": [
                 "build",
-                "${workspaceFolder}/TestLib/TestLib.csproj"
+                "${workspaceFolder}/UXAV.TestLib/UXAV.TestLib.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -17,7 +17,7 @@
             "type": "shell",
             "args": [
                 "pack",
-                "${workspaceFolder}/TestLib/TestLib.csproj"
+                "${workspaceFolder}/UXAV.TestLib/UXAV.TestLib.csproj"
             ],
             "problemMatcher": "$msCompile",
             "group": {

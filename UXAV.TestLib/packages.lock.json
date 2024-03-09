@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     ".NETFramework,Version=v4.7.2": {
+      "Crestron.SimplSharp.SDK.Library": {
+        "type": "Direct",
+        "requested": "[2.20.52, )",
+        "resolved": "2.20.52",
+        "contentHash": "AwR6R4QZAr+eiFnj9PoyvIGYJPCEWcA4QuGSl79EEdFCcUhLR6D8TT5pyP2+FQU21/88uvzYsaDsKIHfOtUd1g=="
+      },
       "Microsoft.NETFramework.ReferenceAssemblies": {
         "type": "Direct",
         "requested": "[1.0.2, )",
@@ -24,6 +30,12 @@
       }
     },
     "net6.0": {
+      "Crestron.SimplSharp.SDK.Library": {
+        "type": "Direct",
+        "requested": "[2.20.52, )",
+        "resolved": "2.20.52",
+        "contentHash": "AwR6R4QZAr+eiFnj9PoyvIGYJPCEWcA4QuGSl79EEdFCcUhLR6D8TT5pyP2+FQU21/88uvzYsaDsKIHfOtUd1g=="
+      },
       "Newtonsoft.Json": {
         "type": "Direct",
         "requested": "[13.0.3, )",
