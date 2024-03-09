@@ -8,7 +8,7 @@ on:
       - release/*
 
 env:
-  PROJECT_NAME: TestLib
+  PROJECT_NAME: UXAV.TestLib
 
 jobs:
   build:
