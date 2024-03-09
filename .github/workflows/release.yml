@@ -51,14 +51,6 @@ jobs:
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
-      - name: Publish to GitHub
-        id: publish_github
-        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://nuget.pkg.github.com/MikeJobson/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish to NuGet
-        id: publish_nuget
-        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
-
       - name: Create Release
         id: create_release
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
@@ -70,3 +62,11 @@ jobs:
           prerelease: false
           artifacts: |
             **/*.nupkg
+
+      - name: Publish to GitHub
+        id: publish_github
+        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://nuget.pkg.github.com/MikeJobson/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to NuGet
+        id: publish_nuget
+        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
