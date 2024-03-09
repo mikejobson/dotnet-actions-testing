@@ -10,7 +10,6 @@
         <PackageId>UXAV.TestLib</PackageId>
         <PackageTags>Crestron, SimplSharp, SimplSharpPro, Crestron.SimplSharp, Crestron.SimplSharpPro, UXAV, UXAV.TestLib</PackageTags>
         <Description>Test Library for CI and publishing automation</Description>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <ReadmeFile>README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
