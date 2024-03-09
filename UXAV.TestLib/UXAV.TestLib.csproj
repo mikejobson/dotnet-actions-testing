@@ -10,7 +10,7 @@
         <PackageId>UXAV.TestLib</PackageId>
         <Description>Test Library for CI and publishing automation</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <ReadmeFile>docs\README.md</ReadmeFile>
+        <ReadmeFile>README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\README.md" Pack="true" PackagePath="docs\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
