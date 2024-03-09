@@ -44,7 +44,9 @@ jobs:
       - name: Rewrite Version Number
         id: rewrite-version
         run: |
-          perl -i -p -e 's/<Version>.*<\/Version>/<Version>${{ env.VERSION }}</Version>/' **/${{ env.PROJECT_NAME }}.csproj
+          command="s/<Version>.*<\/Version>/<Version>${{ env.VERSION }}</Version>/"
+          echo "Rewriting version number using sed with command: $command"
+          sed -i $command **/${{ env.PROJECT_NAME }}.csproj
 
       - name: Restore Nuget Packages
         id: restore
