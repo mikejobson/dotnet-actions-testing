@@ -29,25 +29,18 @@ jobs:
           cache: true
           cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
 
-      - name: Get Version Number
-        id: get-version
+      - name: Check Version Number
+        id: check-version
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
           echo "Version is $version"
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
-          count=$(echo $tags | grep -o $version-rc- | wc -l)
-          count=$((count+1))
-          echo "Next rc tag is $count"
-          echo "VERSION=$version-rc-$count" >> $GITHUB_ENV
-          echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
-          echo "VERSION_TITLE=v$version RC $count" >> $GITHUB_ENV
-
-      - name: Rewrite Version Number
-        id: rewrite-version
-        run: |
-          sed -i 's/<Version>.*<\/Version>/<Version>${{ env.VERSION }}<\/Version>/' **/${{ env.PROJECT_NAME }}.csproj
+          if [[ $tags == *"$version" ]]; then
+            echo "Version $version already exists"
+            exit 1
+          fi
 
       - name: Restore Nuget Packages
         id: restore
@@ -73,6 +66,6 @@ jobs:
           tag: ${{ env.TAG }}
           name: Release ${{ env.VERSION_TITLE }}
           draft: false
-          prerelease: true
+          prerelease: false
           artifacts: |
             **/*.nupkg
