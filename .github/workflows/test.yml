@@ -36,7 +36,7 @@ jobs:
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
-          if [[ $tags == *"$version" ]]; then
+          if [[ $tags == "v$version" ]]; then
             echo "Version $version already exists"
             exit 1
           fi
