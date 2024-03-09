@@ -37,10 +37,12 @@ jobs:
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
-          if [[ $tags == "$versionTagToCheck" ]]; then
-            echo "Version $versionTagToCheck already exists"
+          for tag in $tags; do
+          if [[ "$tag" == "$versionTagToCheck" ]]; then
+            echo "Version tag $versionTagToCheck exists"
             exit 1
           fi
+          done
 
       - name: Restore Nuget Packages
         id: restore
