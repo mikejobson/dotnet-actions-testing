@@ -2,5 +2,11 @@
 
 This package is just for CI and publish testing only. Do not use! 🙂
 
-[![NuGet version (Newtonsoft.Json)](https://img.shields.io/nuget/v/Newtonsoft.Json.svg?style=flat-square)](https://www.nuget.org/packages/UXAV.TestLib/)
-![Main Branch Testing](https://github.com/mikejobson/dotnet-actions-testing/actions/workflows/test.yml/badge.svg)
+![NuGet Version](https://img.shields.io/nuget/v/UXAV.TestLib?style=flat&logo=nuget)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mikejobson/dotnet-actions-testing/test.yml?branch=main&style=flat&logo=github&label=Test%20Build)
+
+---
+
+GitHub Repository: [dotnet-actions-testing](https://github.com/mikejobson/dotnet-actions-testing)
+
+NuGet Package: [UXAV.TestLib](https://www.nuget.org/packages/UXAV.TestLib/)
