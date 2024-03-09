@@ -13,7 +13,6 @@
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
         <ReadmeFile>README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

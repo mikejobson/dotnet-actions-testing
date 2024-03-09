@@ -56,8 +56,12 @@ jobs:
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
+      - name: Pack
+        id: pack
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs
+
       - name: Upload package to artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}.${{ env.VERSION }}.nupkg
-          path: ${{ env.PROJECT_NAME }}/bin/Release/${{ env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg
+          path: nupkgs/${{ env.PROJECT_NAME}}.${{ env.VERSION }}.nupkg
