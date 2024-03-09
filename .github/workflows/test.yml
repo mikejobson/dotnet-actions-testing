@@ -32,12 +32,13 @@ jobs:
         id: check-version
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
-          echo "Version is $version"
+          versionTagToCheck="v$version"
+          echo "Version tag to check is $versionTagToCheck"
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
-          if [[ $tags == "v$version" ]]; then
-            echo "Version $version already exists"
+          if [[ $tags == "$versionTagToCheck" ]]; then
+            echo "Version $versionTagToCheck already exists"
             exit 1
           fi
 
