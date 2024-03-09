@@ -54,7 +54,7 @@ jobs:
 
       - name: Pack Nuget
         id: pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
 
       - name: Create Release
         id: create_release
