@@ -50,7 +50,7 @@ jobs:
         id: build
         run: |
           echo "Building ${{ env.PROJECT_NAME }} with version ${{ env.VERSION }} and version suffix ${{ env.PACKAGE_SUFFIX }}"
-          dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:VersionSuffix=${{ env.PACKAGE_SUFFIX }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
+          dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
 
       - name: Pack Nuget
         id: pack

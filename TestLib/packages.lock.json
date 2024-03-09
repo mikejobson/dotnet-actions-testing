@@ -11,12 +11,25 @@
           "Microsoft.NETFramework.ReferenceAssemblies.net472": "1.0.2"
         }
       },
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.3, )",
+        "resolved": "13.0.3",
+        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
+      },
       "Microsoft.NETFramework.ReferenceAssemblies.net472": {
         "type": "Transitive",
         "resolved": "1.0.2",
         "contentHash": "ryAuwkvjMC9xYQ0VXsG7ZBo62y5tBmYaCnovOL5IXfnQPQqjvJGRkLMDyUx+dnCb96UVLJv83R6XK+sRnDnaZg=="
       }
     },
-    "net6.0": {}
+    "net6.0": {
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.3, )",
+        "resolved": "13.0.3",
+        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
+      }
+    }
   }
 }
