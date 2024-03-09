@@ -41,6 +41,7 @@ jobs:
             echo "Version $version already exists"
             exit 1
           fi
+          echo "TAG=v$version" >> $GITHUB_ENV
 
       - name: Restore Nuget Packages
         id: restore
