@@ -10,7 +10,7 @@
         <PackageId>UXAV.TestLib</PackageId>
         <Description>Test Library for CI and publishing automation</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <ReadmeFile>README.md</ReadmeFile>
+        <ReadmeFile>docs\README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
