@@ -10,7 +10,7 @@
         <PackageId>UXAV.TestLib</PackageId>
         <PackageTags>Crestron, SimplSharp, SimplSharpPro, Crestron.SimplSharp, Crestron.SimplSharpPro, UXAV, UXAV.TestLib</PackageTags>
         <Description>Test Library for CI and publishing automation</Description>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
         <ReadmeFile>README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,7 +23,7 @@
 
     <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="README.md"/>
-        <None Include="..\LICENSE" Pack="true" PackagePath="LICENSE"/>
+        <None Include="..\LICENSE.md" Pack="true" PackagePath="LICENSE.md"/>
     </ItemGroup>
 
 </Project>
