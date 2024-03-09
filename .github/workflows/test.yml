@@ -15,7 +15,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
@@ -28,7 +30,7 @@ jobs:
           cache: true
           cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
 
-      - name: Check Version Number
+      - name: Check version number
         id: check-version
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
@@ -43,11 +45,18 @@ jobs:
             exit 1
           fi
           done
+          echo "Version tag $versionTagToCheck does not exist"
 
-      - name: Restore Nuget Packages
+      - name: Restore nuget packages
         id: restore
         run: dotnet restore ${{ env.PROJECT_NAME }}
 
       - name: Build
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
+
+      - name: Upload package to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: ${{ env.PROJECT_NAME }}/bin/Release

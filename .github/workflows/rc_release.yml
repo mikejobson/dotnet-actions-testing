@@ -42,12 +42,12 @@ jobs:
           echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
           echo "VERSION_TITLE=v$version RC $count" >> $GITHUB_ENV
 
-      - name: Rewrite Version Number
+      - name: Rewrite version number
         id: rewrite-version
         run: |
           sed -i 's/<Version>.*<\/Version>/<Version>${{ env.VERSION }}<\/Version>/' **/${{ env.PROJECT_NAME }}.csproj
 
-      - name: Restore Nuget Packages
+      - name: Restore nuget packages
         id: restore
         run: dotnet restore ${{ env.PROJECT_NAME }}
 
@@ -55,7 +55,7 @@ jobs:
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
-      - name: Create Release
+      - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1
         with:

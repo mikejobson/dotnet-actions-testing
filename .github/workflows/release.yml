@@ -16,7 +16,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
@@ -29,21 +31,27 @@ jobs:
           cache: true
           cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
 
-      - name: Check Version Number
+      - name: Check version number
         id: check-version
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
-          echo "Version is $version"
+          versionTagToCheck="v$version"
+          echo "Version tag to check is $versionTagToCheck"
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
-          if [[ $tags == *"$version" ]]; then
-            echo "Version $version already exists"
+          for tag in $tags; do
+          if [[ "$tag" == "$versionTagToCheck" ]]; then
+            echo "Version tag $versionTagToCheck exists"
             exit 1
           fi
-          echo "TAG=v$version" >> $GITHUB_ENV
+          done
+          echo "Version tag $versionTagToCheck does not exist"
+          echo "TAG=$versionTagToCheck" >> $GITHUB_ENV
+          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "VERSION_TITLE=Release v$version" >> $GITHUB_ENV
 
-      - name: Restore Nuget Packages
+      - name: Restore nuget packages
         id: restore
         run: dotnet restore ${{ env.PROJECT_NAME }}
 
@@ -51,7 +59,7 @@ jobs:
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
-      - name: Create Release
+      - name: Create release
         id: create_release
         if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
         uses: ncipollo/release-action@v1
