@@ -35,6 +35,10 @@ jobs:
         id: check-version
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version format: $version"
+            exit 1
+          fi
           versionTagToCheck="v$version"
           echo "Version tag to check is $versionTagToCheck"
           git fetch --tags
