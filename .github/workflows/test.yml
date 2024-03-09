@@ -35,6 +35,7 @@ jobs:
 
       - name: Check version number
         id: check-version
+        if: github.event_name == 'push'
         run: |
           version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
           versionTagToCheck="v$version"
