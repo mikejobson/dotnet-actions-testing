@@ -6,8 +6,9 @@
         <LangVersion>8</LangVersion>
         <Authors>Mike Jobson</Authors>
         <RepositoryUrl>https://github.com/mikejobson/dotnet-actions-testing</RepositoryUrl>
-        <VersionPrefix>1.0.3</VersionPrefix>
+        <Version>1.0.3</Version>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

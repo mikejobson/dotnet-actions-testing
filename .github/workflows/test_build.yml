@@ -29,18 +29,22 @@ jobs:
       - name: Get Version Number
         id: get-version
         run: |
-          version=$(grep -o '<VersionPrefix>.*</VersionPrefix>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<VersionPrefix>\(.*\)<\/VersionPrefix>/\1/')
+          version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
           echo "Version is $version"
-          echo "VERSION=$version" >> $GITHUB_ENV
           git fetch --tags
           tags=$(git tag --list)
           echo "Looking at tags:\n$tags"
           count=$(echo $tags | grep -o $version-rc- | wc -l)
           count=$((count+1))
           echo "Next rc tag is $count"
-          echo "PACKAGE_SUFFIX=rc-$count" >> $GITHUB_ENV
+          echo "VERSION=$version-rc-$count" >> $GITHUB_ENV
           echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
           echo "VERSION_TITLE=v$version Release Candidate $count" >> $GITHUB_ENV
+
+      - name: Rewrite Version Number
+        id: rewrite-version
+        run: |
+          sed -i '' "s/<Version>.*<\/Version>/<Version>${{ env.VERSION }}</Version>/" **/${{ env.PROJECT_NAME }}.csproj
 
       - name: Restore Nuget Packages
         id: restore
@@ -48,13 +52,7 @@ jobs:
 
       - name: Build
         id: build
-        run: |
-          echo "Building ${{ env.PROJECT_NAME }} with version ${{ env.VERSION }} and version suffix ${{ env.PACKAGE_SUFFIX }}"
-          dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore -p:VersionPrefix=${{ env.VERSION }} -p:FileVersion=${{ env.VERSION }} -p:InformationalVersion=${{ env.TAG }}
-
-      - name: Pack Nuget
-        id: pack
-        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs --version-suffix ${{ env.PACKAGE_SUFFIX }}
+        run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
       - name: Create Release
         id: create_release
@@ -65,4 +63,4 @@ jobs:
           draft: false
           prerelease: true
           artifacts: |
-            nupkgs/*.nupkg
+            **/*.nupkg
