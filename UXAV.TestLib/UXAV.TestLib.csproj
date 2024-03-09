@@ -7,6 +7,10 @@
         <Authors>Mike Jobson</Authors>
         <RepositoryUrl>https://github.com/mikejobson/dotnet-actions-testing</RepositoryUrl>
         <Version>1.0.4</Version>
+        <PackageId>UXAV.TestLib</PackageId>
+        <Description>Test Library for CI and publishing automation</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <ReadmeFile>../README.md</ReadmeFile>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
