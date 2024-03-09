@@ -55,6 +55,10 @@ jobs:
         id: build
         run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
 
+      - name: Pack
+        id: pack
+        run: dotnet pack ${{ env.PROJECT_NAME }} -c Release -v m --no-build --output nupkgs
+
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -64,12 +68,12 @@ jobs:
           draft: false
           prerelease: true
           artifacts: |
-            **/*.nupkg
+            nupkgs/*.nupkg
 
       - name: Publish to GitHub
         id: publish_github
-        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://nuget.pkg.github.com/MikeJobson/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push nupkgs/*.nupkg --source https://nuget.pkg.github.com/MikeJobson/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to NuGet
         id: publish_nuget
-        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push nupkgs/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
