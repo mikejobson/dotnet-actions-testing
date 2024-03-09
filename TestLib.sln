@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib", "TestLib\TestLib.csproj", "{545428E5-1CCC-4E4A-8AA0-EF6229DBF393}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UXAV.TestLib", "TestLib\UXAV.TestLib.csproj", "{545428E5-1CCC-4E4A-8AA0-EF6229DBF393}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

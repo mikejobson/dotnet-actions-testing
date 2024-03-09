@@ -1,4 +1,4 @@
-﻿namespace TestLib
+﻿namespace UXAV.TestLib
 {
     public class Class1
     {

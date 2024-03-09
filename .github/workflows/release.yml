@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+env:
+  PROJECT_NAME: TestLib
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Setup .NET Core
+        id: setup-dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+          cache: true
+          cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
+
+      - name: Get Version Number
+        id: get-version
+        run: |
+          version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          echo "Version is $version"
+          git fetch --tags
+          tags=$(git tag --list)
+          echo "Looking at tags:\n$tags"
+          count=$(echo $tags | grep -o $version-rc- | wc -l)
+          count=$((count+1))
+          echo "Next rc tag is $count"
+          echo "VERSION=$version-rc-$count" >> $GITHUB_ENV
+          echo "TAG=v$version-rc-$count" >> $GITHUB_ENV
+          echo "VERSION_TITLE=v$version RC $count" >> $GITHUB_ENV
+
+      - name: Rewrite Version Number
+        id: rewrite-version
+        run: |
+          sed -i 's/<Version>.*<\/Version>/<Version>${{ env.VERSION }}<\/Version>/' **/${{ env.PROJECT_NAME }}.csproj
+
+      - name: Restore Nuget Packages
+        id: restore
+        run: dotnet restore ${{ env.PROJECT_NAME }}
+
+      - name: Build
+        id: build
+        run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
+
+      - name: Publish to GitHub
+        id: publish_github
+        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://nuget.pkg.github.com/MikeJobson/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to NuGet
+        id: publish_nuget
+        run: dotnet nuget push ${{ env.PROJECT_NAME }}/**/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+
+      - name: Create Release
+        id: create_release
+        if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release/')
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.TAG }}
+          name: Release ${{ env.VERSION_TITLE }}
+          draft: false
+          prerelease: true
+          artifacts: |
+            **/*.nupkg

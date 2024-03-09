@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test Build
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
+env:
+  PROJECT_NAME: TestLib
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Setup .NET Core
+        id: setup-dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 6.0.x
+          cache: true
+          cache-dependency-path: "${{ env.PROJECT_NAME }}/packages.lock.json"
+
+      - name: Check Version Number
+        id: check-version
+        run: |
+          version=$(grep -o '<Version>.*</Version>' **/${{ env.PROJECT_NAME }}.csproj | sed 's/<Version>\(.*\)<\/Version>/\1/')
+          echo "Version is $version"
+          git fetch --tags
+          tags=$(git tag --list)
+          echo "Looking at tags:\n$tags"
+          if [[ $tags == *"$version"* ]]; then
+            echo "Version $version already exists"
+            exit 1
+          fi
+
+      - name: Restore Nuget Packages
+        id: restore
+        run: dotnet restore ${{ env.PROJECT_NAME }}
+
+      - name: Build
+        id: build
+        run: dotnet build ${{ env.PROJECT_NAME }} -c Release -v m --no-restore
